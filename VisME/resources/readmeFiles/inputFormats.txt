@@ -1,0 +1,116 @@
+VisME - Visual Microsaccades Explorer: Input File Formats
+=========================================================
+
+Eye Tracking Data File (maf)
+----------------------------
+
+High-frequency eye tracking data is required as input, with a minimum frequency of 200 Hz in order to detect microsaccades.
+
+We use our own file format to load eye-tracking data into our application. 
+In a preprocessing step, you will need to transform your data into our format.
+
+The file extension must be ".maf".
+
+Each file contains all data that belongs to one participant; this can be data for multiple trials.
+
+In the first line a name for the participant has to be provided and a value for pixels per degree in the second line:
+PARTICIPANT <participantName>
+PIXELSPERDEGREE <pixelsPerDegree>
+
+Pixels per degree can be determined from the distance to the screen (d), the width (or height) of the screen (w) and the horizontal (or vertical) resolution of the screen (p) => p*PI/(2*atan(w/(2*d))*180)
+Then, for each trial (specified with a name) the screen coordinates, the frequency, the stimulus (optional) and eye positions have to be given.
+
+Each trial starts with
+TRIAL <trialName>
+and ends with
+ENDTRIAL
+
+<trialName> should be the same for multiple participants in order to detect that the same trial is meant (e.g. if the same stimulus was used). 
+
+At the beginning of a trial screen coordinates, the frequency of the recording and a stimulus file path are specified (images are displayed on the center with its original resolution):
+COORDS <xMin> <yMin> <xMax> <yMax>
+FREQ <frequency>
+STIMULUS <filePath>
+
+The eye tracking data has to be separated for fixations, microsaccades and gaze positions. Microsaccades and fixations are optional as they can be computed by the system but gaze positions are required (for at least one eye). The order of the different eye movement types (gaze points, fixations, microsaccades) is not important.
+
+Gaze positions, Microsaccades and Fixations can be specified with "R" for the right eye, "L" for the left eye or "B" for averaged values between both eyes.
+
+Samples start with the eye type, followed by a time step index and the x and y position:
+<eye> <index> <xPos> <yPos>
+
+If data for a time stamp is not available, there will be no entry for that specific time stamp index.
+
+Fixations start with an "F" followed by the eye type, a time step index, the duration (given in time steps), x and y position, which specify the center of the fixation:
+F <eye> <startIndex> <durationIds> <xPos> <yPos>
+
+Microsaccades start with a "M" followed by the eye type, a start index, the duration, peak velocity, horizontal and vertical component and horizontal and vertical amplitude (these values are obtained by the algorithm by Engbert and Kliegl).
+M <eye> <startIndex> <durationIds> <peakVelocity(deg/s)> <horizontalComp(deg)> <verticalComp(deg)> <horizontalAmpl(deg)> <verticalAmpl(deg)>
+
+Additionally, events (which do not contain eye movements but specify a time span with a description) start with an "E" and can be specified with a start index, duration and a description:
+E <startIndex> <durationIds> <name/description)>
+
+Note, that <startIndex> has to be a value of the <index> values and durationIds = endIndex - startIndex + 1 (number of samples from start to end of a fixation/saccade). 
+
+Data can also be exported using this format -- currently available data (imported or calculated) for gaze positions, fixations, microsaccades and events can be exported for the current trial, participant or all participants.
+
+
+General format:
+
+PARTICIPANT <participantName>
+PIXELSPERDEGREE <pixelsPerDegree>
+
+# first trial
+TRIAL <trialName>
+COORDS <xMin> <yMin> <xMax> <yMax>
+FREQ <frequency>
+STIMULUS <filePath>
+
+# gaze points
+<eye> <index> <xPos> <yPos>
+...
+# fixations
+F <eye> <startIndex> <durationIds> <xPos> <yPos>
+...
+# microsaccades
+M <eye> <startIndex> <durationIds> <peakVelocity(deg/s)> <horizontalComp(deg)> <verticalComp(deg)> <horizontalAmpl(deg)> <verticalAmpl(deg)>
+...
+# events
+E <startIndex> <durationIds> <name/description)>
+...
+ENDTRIAL
+
+# optionally further trials
+...
+
+
+Eye Tracking Test Conditions File (mtf)
+-----------------------------
+
+The csv file contains information about test conditions (e.g. tasks).
+Each lines is as follows:
+
+<participantName>,<trialName>,<testConditionName>
+
+with <participantName> and <trialName> as specified in the maf file.
+
+The test condition file needs to be loaded after or together (drag and drop) with the maf files. If a further maf file is added to the project the test condition file needs to be imported as well in order to set the test conditions for the corresponding participant as well.
+
+
+Microsaccades Parameter File (mpf)
+----------------------------------
+
+This file contains parameter settings for the microsaccade filter; it can be exported and imported with the system. Values can be changed in a text editor manually and in the user interface.
+
+
+Fixation Parameter File (fpf)
+-----------------------------
+
+This file contains parameter settings for the fixation filter; it can be exported and imported with the system. Values can be changed in a text editor manually and in the user interface.
+
+
+Color Settings File (csf)
+-------------------------
+
+This file contains color values for the visualizations; it can be exported and imported with the system. Color values can be changed in a text editor manually and in the user interface.
+

@@ -1,0 +1,51 @@
+VisME - Visual Microsaccades Explorer
+=====================================
+
+Features
+--------
+
+* Analyze microsaccades in the context of the entire eye tracking data (raw data)
+* Analyze microsaccades in the context of the stimulus
+* Analyze microsaccadic properties (direction (orientation), amplitude (angular distance) and number of occurrences)
+* Analyze microsaccades across individuals and groups of participants
+* Analyze microsaccades in one or multiple trials
+* Analyze location of microsaccades within fixations
+* Analyze relationship between space and time properties
+* Analyze the influence of microsaccade detection parameters
+* Analyze the influence of fixation filters on microsaccades
+* Analyze the relationship between microsaccades and test conditions
+* Analyze saccades similar to microsaccades
+
+Visualizations
+--------------
+
+Multiple different views are available for microsaccade/eye tracking data exploration:
+
+* Stimulus View: Visualize raw data on top of the stimulus and highlight microsaccades/fixations; show scan path.
+* Timeline: Show temporal distribution of microsaccades in the context of fixations and the eye position.
+* Data Plots: Plot directional distributions of microsaccades (or saccades) in relation to the current and next fixation.
+* Histogram: Show different (micro)saccadic properties as histogram (amplitude, duration, velocity, occurence).
+* Scatterplot: Show different (micro)saccadic properties as scatterplot (amplitude, duration, velocity).
+
+Two different modes are provided for the visualizations: one mode for a single trial and one for multiple trials.
+
+In the default mode with one trial, it is possible to select a participant and a trial and create the visualizations for this specific selection. For all views, the above described visualization methods are available.
+Additionally, it is possible to limit the visualizations to a selection of fixations and move through the data on fixation level.
+
+In group mode, it is possible to select a set of participants, trials, and test conditions. The polar plots (which are created based on trials) can be plotted either on top of each other or as sum in one plot. It is possible to visualize for all participants the results of all trials with a specific test condition. As a large amount of data samples must be handled and due to visual clutter in the main and timeline views, we decided to disable most of the related visualizations except for plotting the directional lines of microsaccades in the stimulus view. This visualization in the stimulus view also helps understand the overall change of microsaccades on the stimulus when adding or removing trials and changing parameters. The histogram and scatter plot do not change in theri behavior except for using all available data insted of one trial.
+
+
+Filters
+-------
+
+Fixations and Microsaccades can be defined in the input file or determined with the built-in fixation and microsaccade filter. Both filter allows the specification of multiple parameters and use the same base algorithm introduced by Engbert and Kliegel (2003) with additional optional filter settings.
+
+For microsaccades detection fixations have to be defined first (either in the input file or with the application) and microsaccades can then be determined within the fixation ranges.
+
+
+Some Notes for Usage
+--------------------
+
+* When highlighting fixation samples: the first sample of a fixation is highlighted by a black circle and the last one by a white circle to indicate its movement direction.
+
+* It is possible to click on fixations in both the stimulus view and the timeline. To deselect a fixation use doubleclick on the stimulus view. On areas without fixations the scenes (stimulus view and timeline) can be moved, this is possible by presing a modifier (e.g. ctrl) on the whole views. Pressing shift in the timeline allows you to use a rubberband to specify a section of interest. If the time limitaton is applied just data of whole fixations within this area are used for analysis.
